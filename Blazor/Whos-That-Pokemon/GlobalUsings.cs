@@ -1,0 +1,10 @@
+﻿global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
+global using System.Net.Http.Json;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+global using Whos_That_Pokemon;
+global using Whos_That_Pokemon.Models;
+global using Whos_That_Pokemon.Services;

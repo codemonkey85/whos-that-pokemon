@@ -1,0 +1,44 @@
+﻿@page "/"
+
+<PageTitle>Who's That Pokemon?</PageTitle>
+
+<h1>Who's That Pokemon?</h1>
+
+<div class="img-area">
+    @if (PokemonData?.Pokemon is not null)
+    {
+        <img src="@PokemonArtworkUrl" class="silhouette" alt="Pokémon silhouette" />
+    }
+</div>
+
+<div class="pokemon-data invisible">
+    @if (PokemonData?.PokemonSpecies is not null)
+    {
+        <span class="generation data">@PrettyGenName</span>
+    }
+    @if (PokemonData?.Pokemon is not null)
+    {
+        <ul class="types">
+            <li style="background-color: @Type1NameColor?.Color">@Type1NameColor?.Name</li>
+            @if (PokemonData?.Pokemon?.Types?.Length > 1)
+            {
+                <li style="background-color: @Type2NameColor?.Color">@Type2NameColor?.Name</li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="play-area">
+    <div class="controls-new">
+        <button @attributes="NewPokemonButtonAttributes" @onclick="async () => await FetchPokemon()">New Pokémon</button>
+    </div>
+    <div class="controls-answer">
+        <button @attributes="SubmitButtonAttributes" @onclick="HandleSubmit">Submit</button>
+    </div>
+    <div class="answer-area">
+        <input @attributes="UserInputAttributes" @bind="gameModel.UserInput" @onclick="ClearInput" />
+    </div>
+    <div class="idk">
+        <button @attributes="IdkButtonAttributes" @onclick="DontKnow">I don't know!</button>
+    </div>
+</div>

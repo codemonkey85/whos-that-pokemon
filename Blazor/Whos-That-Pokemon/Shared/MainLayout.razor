@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="header">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <p>This project ported to Blazor, from original code by <a href="https://github.com/leifaj/whos-that-pokemon" target="_blank">leifaj</a>.</p>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+
+    <footer>
+        <p>All images © Nintendo.</p>
+        <p>Pokémon data from PokéAPI.</p>
+        <p>Background image from u/CaptainRako.</p>
+    </footer>
+</div>
