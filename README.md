@@ -2,7 +2,7 @@
 A Pokémon guessing game! Try to guess the Pokémon based off of its silhouette.
 
 
-[Click here](https://leifaj.github.io/whos-that-pokemon/) to view the live site.
+[Click here](https://kind-pond-06e4da70f.1.azurestaticapps.net/) to view the live site.
 
 1. Press "New Pokémon" to get a new question.
 2. Try to guess the Pokémon based on its silhouette. Type your answer in the input box, then press "Submit". (Answers are not case-sensitive.)
