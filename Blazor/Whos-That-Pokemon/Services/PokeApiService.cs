@@ -52,7 +52,7 @@ public record PokeApiService(HttpClient HttpClient)
 
     public static string GetGenerationPrettyName(string? genName)
     {
-        int genNum = genName switch
+        var genNum = genName switch
         {
             null => 0,
             "generation-i" => 1,

@@ -6,13 +6,13 @@ public partial class Index
 
     private (Pokemon Pokemon, PokemonSpecies PokemonSpecies)? PokemonData;
 
-    private IDictionary<string, object> NewPokemonButtonAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> NewPokemonButtonAttributes = new Dictionary<string, object>
     {
         ["type"] = "button",
         ["class"] = "btn",
     };
 
-    private IDictionary<string, object> SubmitButtonAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> SubmitButtonAttributes = new Dictionary<string, object>
     {
         ["id"] = "btn-checkAnswer",
         ["type"] = "submit",
@@ -20,7 +20,7 @@ public partial class Index
         ["disabled"] = string.Empty,
     };
 
-    private IDictionary<string, object> UserInputAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> UserInputAttributes = new Dictionary<string, object>
     {
         ["type"] = "text",
         ["class"] = "user-answer disabled",
@@ -28,7 +28,7 @@ public partial class Index
         ["placeholder"] = "Pokémon name",
     };
 
-    private IDictionary<string, object> IdkButtonAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> IdkButtonAttributes = new Dictionary<string, object>
     {
         ["id"] = "btn-idk",
         ["type"] = "button",
