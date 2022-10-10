@@ -2,17 +2,14 @@
 
 public partial class Index
 {
-    private readonly GameModel gameModel = new();
+    private readonly GameModel _gameModel = new();
 
-    private (Pokemon Pokemon, PokemonSpecies PokemonSpecies)? PokemonData;
+    private (Pokemon Pokemon, PokemonSpecies PokemonSpecies)? _pokemonData;
 
-    private readonly IDictionary<string, object> NewPokemonButtonAttributes = new Dictionary<string, object>
-    {
-        ["type"] = "button",
-        ["class"] = "btn",
-    };
+    private readonly IDictionary<string, object> _newPokemonButtonAttributes =
+        new Dictionary<string, object> { ["type"] = "button", ["class"] = "btn", };
 
-    private readonly IDictionary<string, object> SubmitButtonAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> _submitButtonAttributes = new Dictionary<string, object>
     {
         ["id"] = "btn-checkAnswer",
         ["type"] = "submit",
@@ -20,7 +17,7 @@ public partial class Index
         ["disabled"] = string.Empty,
     };
 
-    private readonly IDictionary<string, object> UserInputAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> _userInputAttributes = new Dictionary<string, object>
     {
         ["type"] = "text",
         ["class"] = "user-answer disabled",
@@ -28,7 +25,7 @@ public partial class Index
         ["placeholder"] = "Pokémon name",
     };
 
-    private readonly IDictionary<string, object> IdkButtonAttributes = new Dictionary<string, object>
+    private readonly IDictionary<string, object> _idkButtonAttributes = new Dictionary<string, object>
     {
         ["id"] = "btn-idk",
         ["type"] = "button",
@@ -37,35 +34,37 @@ public partial class Index
     };
 
     private string? PokemonName =>
-        PokemonData?.Pokemon?.Name;
+        _pokemonData?.Pokemon.Name;
 
-    private string? PrettyGenName =>
-        PokeApiService.GetGenerationPrettyName(PokemonData?.PokemonSpecies?.Generation?.Name);
+    private string PrettyGenName =>
+        PokeApiService.GetGenerationPrettyName(_pokemonData?.PokemonSpecies.Generation?.Name);
 
     private (string? Name, string? Color)? Type1NameColor =>
-        (PokemonData?.Pokemon?.Types?.Length ?? 0) < 1
+        (_pokemonData?.Pokemon.Types?.Length ?? 0) < 1
             ? null
-            : (PokemonData?.Pokemon?.Types?[0]?.Type?.Name, PokeApiService.GetTypeColor(PokemonData?.Pokemon?.Types?[0]?.Type?.Name));
+            : (_pokemonData?.Pokemon.Types?[0].Type?.Name,
+                PokeApiService.GetTypeColor(_pokemonData?.Pokemon.Types?[0].Type?.Name));
 
     private (string? Name, string? Color)? Type2NameColor =>
-        (PokemonData?.Pokemon?.Types?.Length ?? 0) < 2
+        (_pokemonData?.Pokemon.Types?.Length ?? 0) < 2
             ? null
-            : (PokemonData?.Pokemon?.Types?[1]?.Type?.Name, PokeApiService.GetTypeColor(PokemonData?.Pokemon?.Types?[1]?.Type?.Name));
+            : (_pokemonData?.Pokemon.Types?[1].Type?.Name,
+                PokeApiService.GetTypeColor(_pokemonData?.Pokemon.Types?[1].Type?.Name));
 
     private string? PokemonArtworkUrl =>
-        PokemonData?.Pokemon?.Sprites?.Other?.OfficialArtwork?.FrontDefault;
+        _pokemonData?.Pokemon.Sprites?.Other?.OfficialArtwork?.FrontDefault;
 
     private bool Correct =>
-        !string.IsNullOrEmpty(gameModel.UserInput) && string.Equals(gameModel.UserInput, PokemonData?.Pokemon?.Name);
+        !string.IsNullOrEmpty(_gameModel.UserInput) && string.Equals(_gameModel.UserInput, _pokemonData?.Pokemon.Name);
 
     private async Task FetchPokemon()
     {
         ResetVisibility();
         ResetColors();
-        PokemonData = await PokeApiService.GetPokemonInfo();
-        if (PokemonData is null)
+        _pokemonData = await PokeApiService.GetPokemonInfo();
+        if (_pokemonData is null)
         {
-            Console.WriteLine($"{nameof(PokemonData)} is null");
+            Console.WriteLine($"{nameof(_pokemonData)} is null");
             return;
         }
         EnableButtons();
@@ -82,7 +81,7 @@ public partial class Index
 
     private void HandleSubmit()
     {
-        if (string.IsNullOrEmpty(gameModel.UserInput))
+        if (string.IsNullOrEmpty(_gameModel.UserInput))
         {
             return;
         }
@@ -103,20 +102,20 @@ public partial class Index
 
     private void DisableButtons()
     {
-        IdkButtonAttributes.TryAdd("disabled", string.Empty);
-        SubmitButtonAttributes.TryAdd("disabled", string.Empty);
-        UserInputAttributes.TryAdd("disabled", string.Empty);
-        IdkButtonAttributes["class"] = "disabled";
-        SubmitButtonAttributes["class"] = "btn disabled";
+        _idkButtonAttributes.TryAdd("disabled", string.Empty);
+        _submitButtonAttributes.TryAdd("disabled", string.Empty);
+        _userInputAttributes.TryAdd("disabled", string.Empty);
+        _idkButtonAttributes["class"] = "disabled";
+        _submitButtonAttributes["class"] = "btn disabled";
     }
 
     private void EnableButtons()
     {
-        IdkButtonAttributes.Remove("disabled");
-        SubmitButtonAttributes.Remove("disabled");
-        UserInputAttributes.Remove("disabled");
-        IdkButtonAttributes["class"] = string.Empty;
-        SubmitButtonAttributes["class"] = "btn";
+        _idkButtonAttributes.Remove("disabled");
+        _submitButtonAttributes.Remove("disabled");
+        _userInputAttributes.Remove("disabled");
+        _idkButtonAttributes["class"] = string.Empty;
+        _submitButtonAttributes["class"] = "btn";
     }
 
     private void ShowAnswer()
@@ -151,9 +150,9 @@ public partial class Index
 
     private void ClearInput()
     {
-        if (string.Equals(gameModel.UserInput, "Try again!"))
+        if (string.Equals(_gameModel.UserInput, "Try again!"))
         {
-            gameModel.UserInput = string.Empty;
+            _gameModel.UserInput = string.Empty;
         }
     }
 }

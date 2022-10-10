@@ -2,14 +2,11 @@
 
 public record PokeApiService(HttpClient HttpClient)
 {
-    private readonly Random random = new();
+    private readonly Random _random = new();
 
     public async Task<(Pokemon Pokemon, PokemonSpecies PokemonSpecies)> GetPokemonInfo(int? id = null)
     {
-        if (id is null)
-        {
-            id = random.Next(1, 898);
-        }
+        id ??= _random.Next(1, 898);
 
         var pokemon = await HttpClient.GetFromJsonAsync<Pokemon>($"https://pokeapi.co/api/v2/pokemon/{id}");
         if (pokemon is null)
@@ -18,12 +15,9 @@ public record PokeApiService(HttpClient HttpClient)
         }
 
         var pokemonSpecies = await HttpClient.GetFromJsonAsync<PokemonSpecies>($"https://pokeapi.co/api/v2/pokemon-species/{id}");
-        if (pokemonSpecies is null)
-        {
-            throw new Exception($"{nameof(PokemonSpecies)} is null");
-        }
-
-        return (pokemon, pokemonSpecies);
+        return pokemonSpecies is null
+            ? throw new Exception($"{nameof(PokemonSpecies)} is null")
+            : ((Pokemon Pokemon, PokemonSpecies PokemonSpecies))(pokemon, pokemonSpecies);
     }
 
     public static string GetTypeColor(string? typeName) => typeName switch
@@ -50,9 +44,8 @@ public record PokeApiService(HttpClient HttpClient)
         _ => string.Empty
     };
 
-    public static string GetGenerationPrettyName(string? genName)
-    {
-        var genNum = genName switch
+    public static string GetGenerationPrettyName(string? genName) =>
+        $"Gen {genName switch
         {
             null => 0,
             "generation-i" => 1,
@@ -64,7 +57,5 @@ public record PokeApiService(HttpClient HttpClient)
             "generation-vii" => 7,
             "generation-viii" => 8,
             _ => 0
-        };
-        return $"Gen {genNum}";
-    }
+        }}";
 }
